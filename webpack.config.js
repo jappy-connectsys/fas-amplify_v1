@@ -32,7 +32,8 @@ const config = {
       historyApiFallback: true,
       allowedHosts: ['localhost',
                       'moandbear-cms-dev.5i9kftpno7oc0.ap-southeast-1.cs.amazonlightsail.com',
-                      'faswebdev.5i9kftpno7oc0.ap-southeast-1.cs.amazonlightsail.com'
+                      'faswebdev.5i9kftpno7oc0.ap-southeast-1.cs.amazonlightsail.com',
+                      'main.d1inuk55s9owf8.amplifyapp.com'
                     ],
       hot: true,
       /*

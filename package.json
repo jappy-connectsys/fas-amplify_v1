@@ -6,6 +6,7 @@
   "bugs": {
     "url": "https://github.com/middlewareuc/FASWeb"
   },
+  "proxy": "main.d1inuk55s9owf8.amplifyapp.com",
   "license": "MIT",
   "author": "ConnectSys Team",
   "private": true,
