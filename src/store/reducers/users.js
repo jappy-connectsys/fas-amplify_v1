@@ -1,6 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import api from '../../services/api';
-import { SENDGRID_LINK_TO_SEND_FORGOT_PASSWORD, SENDGRID_LINK, SENDGRID_EMAIL_SENDER, SENDGRID_SENDER_NAME } from '../../config';
+import { 
+    REACT_APP_SENDGRID_LINK_TO_SEND_FORGOT_PASSWORD, 
+    REACT_APP_SENDGRID_LINK, 
+    REACT_APP_SENDGRID_EMAIL_SENDER, 
+    REACT_APP_SENDGRID_SENDER_NAME 
+} from '../../config';
 import { capitalizeFirstLetter } from '../../helper'
 import { v4 as uuidv4 } from 'uuid';
 
@@ -194,13 +199,13 @@ export const SendMailForgotPassword = createAsyncThunk(
             "personalizations": [
                 {"to": [{ "email": email, "name": lastName }]},
                 {
-                    "from": {"email": SENDGRID_EMAIL_SENDER, "name": SENDGRID_SENDER_NAME},
+                    "from": {"email": REACT_APP_SENDGRID_EMAIL_SENDER, "name": REACT_APP_SENDGRID_SENDER_NAME},
                     "to": [{ "email": email,"name": lastName }]
                 }
             ],
             "from": {
-                "email": SENDGRID_EMAIL_SENDER,
-                "name": SENDGRID_SENDER_NAME
+                "email": REACT_APP_SENDGRID_EMAIL_SENDER,
+                "name": REACT_APP_SENDGRID_SENDER_NAME
             },
             "subject": "Forgot Password Link",
             "content": [
@@ -210,12 +215,12 @@ export const SendMailForgotPassword = createAsyncThunk(
                           Hello ${lastName},<br><br>
                           If you've lost your password or wish to reset it<br><br>
                           click the link below.<br><br><br>
-                          ${SENDGRID_LINK}/${code}`
+                          ${REACT_APP_SENDGRID_LINK}/${code}`
                 }
           ]
         }
 
-        const response = await api.post(SENDGRID_LINK_TO_SEND_FORGOT_PASSWORD, payload)
+        const response = await api.post(REACT_APP_SENDGRID_LINK_TO_SEND_FORGOT_PASSWORD, payload)
         if(response.status === 204){
             return response.data
         }else{
