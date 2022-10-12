@@ -20,7 +20,7 @@ import {
   CInputGroupText,
   CRow,
 } from '@coreui/react-pro'
-import { REACT_APP_COMPANY_ROLE } from '../../../config'
+import { COMPANY_ROLE } from '../../../config'
 import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
 
@@ -83,7 +83,7 @@ const Register = () => {
       last_name,
       email,
       password,
-      role: REACT_APP_COMPANY_ROLE,
+      role: COMPANY_ROLE,
       status: 'active',
       provider: 'default'
     }
