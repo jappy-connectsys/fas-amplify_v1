@@ -38,6 +38,32 @@ class ApiService {
   patch = (...params) => this.localStorage.patch(...params);
 
   delete = (...params) => this.localStorage.delete(...params);
+
+  updateRequestInterceptor = (token) => {
+    this.localStorage.interceptors.request.use((config) => {
+      const newConfig = { ...config };
+      newConfig.headers['Authorization'] = `Bearer ${token}`;
+
+      return newConfig;
+    },(error)=>{
+        return Promise.reject(error);
+    });
+  };
+
+  updateResponseInterceptor = (refresh) => {
+    this.localStorage.interceptors.response.use(
+    response => response, 
+    error => {
+        let errorResponse = error.response;
+        if (errorResponse.status === 401) {
+            localStorage.removeItem("token");
+            refresh();
+        }
+        
+        return Promise.reject(error);
+    })
+  };
+
 }
 
 export default ApiService.instance;
