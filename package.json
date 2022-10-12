@@ -1,14 +1,9 @@
 {
   "name": "fas-amplify_v1",
   "version": "0.1.0",
-  "description": "FAS Dashboard Template",
-  "homepage": ".",
-  "bugs": {
-    "url": "https://github.com/middlewareuc/FASWeb"
+  "overrides": {
+    "trim-newlines": "^1.0.0"
   },
-  "license": "MIT",
-  "author": "ConnectSys Team",
-  "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
