@@ -1,4 +1,4 @@
-export const API_URL =  process.env.API_URL || `http://localhost:8572`
+export const REACT_APP_DIRECTUS_URL =  process.env.REACT_APP_DIRECTUS_URL || `http://localhost:8572`
 
 export const REACT_APP_DIRECTUS_TOKEN = process.env.REACT_APP_DIRECTUS_TOKEN || `@spiderman03`
 

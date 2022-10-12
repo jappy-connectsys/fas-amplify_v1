@@ -1,6 +1,6 @@
 /* eslint-disable symbol-description */
 import axios from 'axios';
-import { API_URL, REACT_APP_DIRECTUS_TOKEN } from '../config';
+import { REACT_APP_DIRECTUS_URL, REACT_APP_DIRECTUS_TOKEN } from '../config';
 
 const singleton = Symbol();
 const singletonEnforcer = Symbol();
@@ -12,7 +12,7 @@ class ApiService {
     }
 
     this.localStorage = axios.create({
-      baseURL: API_URL,
+      baseURL: REACT_APP_DIRECTUS_URL,
       headers: {
         Pragma: 'no-cache',
         Authorization: 'Bearer ' + REACT_APP_DIRECTUS_TOKEN
