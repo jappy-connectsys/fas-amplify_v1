@@ -39,30 +39,30 @@ class ApiService {
 
   delete = (...params) => this.localStorage.delete(...params);
 
-  updateRequestInterceptor = (token) => {
-    this.localStorage.interceptors.request.use((config) => {
-      const newConfig = { ...config };
-      newConfig.headers['Authorization'] = `Bearer ${token}`;
+  // updateRequestInterceptor = (token) => {
+  //   this.localStorage.interceptors.request.use((config) => {
+  //     const newConfig = { ...config };
+  //     newConfig.headers['Authorization'] = `Bearer ${token}`;
 
-      return newConfig;
-    },(error)=>{
-        return Promise.reject(error);
-    });
-  };
+  //     return newConfig;
+  //   },(error)=>{
+  //       return Promise.reject(error);
+  //   });
+  // };
 
-  updateResponseInterceptor = (refresh) => {
-    this.localStorage.interceptors.response.use(
-    response => response, 
-    error => {
-        let errorResponse = error.response;
-        if (errorResponse.status === 401) {
-            localStorage.removeItem("token");
-            refresh();
-        }
+  // updateResponseInterceptor = (refresh) => {
+  //   this.localStorage.interceptors.response.use(
+  //   response => response, 
+  //   error => {
+  //       let errorResponse = error.response;
+  //       if (errorResponse.status === 401) {
+  //           localStorage.removeItem("token");
+  //           refresh();
+  //       }
         
-        return Promise.reject(error);
-    })
-  };
+  //       return Promise.reject(error);
+  //   })
+  // };
 
 }
 
