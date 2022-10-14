@@ -1,5 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import rootReducer from './reducers';
+import { NODE_ENV } from '../config';
 
 import {
     persistStore, 
@@ -30,7 +31,6 @@ import { getPostingGroups } from './reducers/references/pstgroupSlice';
 import { getPaymentModes } from './reducers/references/paymentmodeSlice';
 import { getProductCategory } from './reducers/references/productCategorySlice';
 
-
 const store = configureStore({
     reducer: rootReducer,
     middleware:(getDefaultMiddleware) => getDefaultMiddleware({
@@ -40,6 +40,13 @@ const store = configureStore({
     }).concat(authMiddleware),
 });
 
+
+if (NODE_ENV === 'development') {
+    (module).hot?.accept('./reducers', () => {
+      const newRootReducer = require('./reducers').default;
+      store.replaceReducer(newRootReducer);
+    });
+};
 
 store.dispatch(getCompanies());
 store.dispatch(getCustomers());

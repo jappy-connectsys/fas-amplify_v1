@@ -1,0 +1,15 @@
+#Files not needed on the build
+Dockerfile.dev
+Dockerfile.prod
+.dockerignore
+.gitignore
+.env
+webpack.config2.js
+webpackDevServer.config.js
+
+#Artifacts
+node_modules
+npm-debug.log
+
+webpackDevServer.config.js
+webpack.config2.js

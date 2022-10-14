@@ -24,7 +24,7 @@ import {
   AppHeaderDropdownNotif,
 } from './header/index'
 
-import { logo } from '../assets/brand/logo'
+import { logo } from 'src/assets/brand/logo'
 
 import { SignOut } from '../store/reducers/users';
 

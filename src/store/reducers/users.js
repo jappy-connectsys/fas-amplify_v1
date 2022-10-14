@@ -1,11 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import api from '../../services/api';
-import { 
-    REACT_APP_SENDGRID_LINK_TO_SEND_FORGOT_PASSWORD, 
-    REACT_APP_SENDGRID_LINK, 
-    REACT_APP_SENDGRID_EMAIL_SENDER, 
-    REACT_APP_SENDGRID_SENDER_NAME 
-} from '../../config';
+import { SENDGRID_LINK_TO_SEND_FORGOT_PASSWORD, SENDGRID_LINK, SENDGRID_EMAIL_SENDER, SENDGRID_SENDER_NAME } from '../../config';
 import { capitalizeFirstLetter } from '../../helper'
 import { v4 as uuidv4 } from 'uuid';
 
@@ -199,13 +194,13 @@ export const SendMailForgotPassword = createAsyncThunk(
             "personalizations": [
                 {"to": [{ "email": email, "name": lastName }]},
                 {
-                    "from": {"email": REACT_APP_SENDGRID_EMAIL_SENDER, "name": REACT_APP_SENDGRID_SENDER_NAME},
+                    "from": {"email": SENDGRID_EMAIL_SENDER, "name": SENDGRID_SENDER_NAME},
                     "to": [{ "email": email,"name": lastName }]
                 }
             ],
             "from": {
-                "email": REACT_APP_SENDGRID_EMAIL_SENDER,
-                "name": REACT_APP_SENDGRID_SENDER_NAME
+                "email": SENDGRID_EMAIL_SENDER,
+                "name": SENDGRID_SENDER_NAME
             },
             "subject": "Forgot Password Link",
             "content": [
@@ -215,12 +210,12 @@ export const SendMailForgotPassword = createAsyncThunk(
                           Hello ${lastName},<br><br>
                           If you've lost your password or wish to reset it<br><br>
                           click the link below.<br><br><br>
-                          ${REACT_APP_SENDGRID_LINK}/${code}`
+                          ${SENDGRID_LINK}/${code}`
                 }
           ]
         }
 
-        const response = await api.post(REACT_APP_SENDGRID_LINK_TO_SEND_FORGOT_PASSWORD, payload)
+        const response = await api.post(SENDGRID_LINK_TO_SEND_FORGOT_PASSWORD, payload)
         if(response.status === 204){
             return response.data
         }else{
@@ -271,19 +266,20 @@ export const ResetingPassword = createAsyncThunk(
 
 export const ClearSignUp = createAsyncThunk(
     'user/clear_sign_up',
-    // eslint-disable-next-line no-empty-pattern
-    async (_, {}) => true
+    async (_, { rejectWithValue, dispatch }) => {
+        return true;
+    }
 )
 
 export const ClearSignIn = createAsyncThunk(
     'user/clear_sign_in',
-    // eslint-disable-next-line no-empty-pattern
-    async (_, {}) => true
+    async (_, { rejectWithValue, dispatch }) => {
+        return true;
+    }
 )
 
 export const ClearForgotPassword = createAsyncThunk(
     'user/clear_forgot_password',
-    // eslint-disable-next-line no-empty-pattern
     async (_, {}) => {
         return true;
     }
