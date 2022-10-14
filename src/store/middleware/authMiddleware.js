@@ -12,9 +12,9 @@ export const authMiddleware = (store) => (next) => (
     // insert token from store to axios request
     // api.updateRequestInterceptor(token);
     // force logout when token is expired
-    // api.updateResponseInterceptor(() => {
-    //   window.location.href = '/';
-    // });
+    api.updateResponseInterceptor(() => {
+      window.location.href = '/';
+    });
   }
 
   return next(action);
