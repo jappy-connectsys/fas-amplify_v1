@@ -1,6 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
 import rootReducer from './reducers';
-import { NODE_ENV } from '../config';
 
 import {
     persistStore, 
@@ -41,12 +40,6 @@ const store = configureStore({
 });
 
 
-if (NODE_ENV === 'development') {
-    (module).hot?.accept('./reducers', () => {
-      const newRootReducer = require('./reducers').default;
-      store.replaceReducer(newRootReducer);
-    });
-};
 
 store.dispatch(getCompanies());
 store.dispatch(getCustomers());
