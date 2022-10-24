@@ -7,11 +7,11 @@ const initialState = {
   message: null,
 }
 
-export const GetCompanies = createAsyncThunk(
-  'company/GetCompanies',
+export const GetCountries = createAsyncThunk(
+  'country/GetCountries',
   async (_, { rejectWithValue, dispatch }) => {
       try {
-          const response = await api.get(`/items/company`)
+          const response = await api.get(`/items/country`)
           return response.data.data;
       } catch (err) {
           return rejectWithValue(err.response.data)
@@ -20,10 +20,10 @@ export const GetCompanies = createAsyncThunk(
 );
 
 export const AddCompany = createAsyncThunk(
-  'company/AddCompany',
+  'country/AddCompany',
   async (payload, { rejectWithValue, dispatch }) => {
       try {
-          const response = await api.post(`/items/company`,payload)
+          const response = await api.post(`/items/country`,payload)
           console.log('~~~', response);
           return true
       } catch (err) {
@@ -32,12 +32,12 @@ export const AddCompany = createAsyncThunk(
   }
 );
 
-export const UpdateCompany = createAsyncThunk(
-  'company/UpdateCompany',
+export const UpdateCountry = createAsyncThunk(
+  'country/UpdateCountry',
   async (payload, { rejectWithValue, dispatch }) => {
       const { id, ...rest } = payload;
       try {
-          const response = await api.patch(`/items/company/${id}`,{...rest})
+          const response = await api.patch(`/items/country/${id}`,{...rest})
           console.log('~~~', response);
           return true
       } catch (err) {
@@ -46,31 +46,31 @@ export const UpdateCompany = createAsyncThunk(
   }
 );
 
-export const ClearCompanies = createAsyncThunk(
-  'company/ClearCompanies',
+export const ClearCountries = createAsyncThunk(
+  'country/ClearCountries',
   async (_, { rejectWithValue, dispatch }) => {
       return true;
   }
 );
 
-export const companySlice = createSlice({
-  name: "company",
+export const countrySlice = createSlice({
+  name: "country",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(ClearCompanies.fulfilled, (state, action) => {
+    builder.addCase(ClearCountries.fulfilled, (state, action) => {
         state.loading = 'idle';
         state.message = null;
     });
 
-    builder.addCase(GetCompanies.pending, (state, action) => {
+    builder.addCase(GetCountries.pending, (state, action) => {
         state.loading = 'loading';
     });
-    builder.addCase(GetCompanies.fulfilled, (state, action) => {
+    builder.addCase(GetCountries.fulfilled, (state, action) => {
         state.loading = 'success';
         state.data = action.payload;
     });
-    builder.addCase(GetCompanies.rejected, (state, action) => {
+    builder.addCase(GetCountries.rejected, (state, action) => {
         state.loading = 'failed';
         state.message = action.payload;
     });
@@ -87,13 +87,13 @@ export const companySlice = createSlice({
         state.message = action.payload;
     });
 
-    builder.addCase(UpdateCompany.pending, (state) => {
+    builder.addCase(UpdateCountry.pending, (state) => {
         state.loading = 'loading';
     });
-    builder.addCase(UpdateCompany.fulfilled, (state, action) => {
+    builder.addCase(UpdateCountry.fulfilled, (state, action) => {
         state.loading = 'success';
     });
-    builder.addCase(UpdateCompany.rejected, (state, action) => {
+    builder.addCase(UpdateCountry.rejected, (state, action) => {
         state.loading = 'failed';
         state.message = action.payload;
     });
@@ -102,7 +102,7 @@ export const companySlice = createSlice({
 
 })
 
-export const selectCompanies = (state) => state.company;
-export const selectCompanyId = (state, id) => state.company.data.find((post) => post.company_id === id);
+export const selectCountries = (state) => state.country;
+export const selectCountryId = (state, id) => state.country.data.find((post) => post.country_id === id);
 
-export default companySlice.reducer;
+export default countrySlice.reducer;

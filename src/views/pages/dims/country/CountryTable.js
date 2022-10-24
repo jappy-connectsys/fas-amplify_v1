@@ -1,31 +1,49 @@
 import React, { useEffect, useState } from 'react'
-import { CSmartTable, CCard, CCardBody, CCardHeader, CCol, CRow, CBadge, CButton, CCollapse } from '@coreui/react-pro'
+import { CSmartTable, CCard, CCardBody, CCardHeader, CCol, CRow, CButton } from '@coreui/react-pro';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { selectAccounts, updateAccount } from './../../../../store/reducers/accountSlice';
+import { selectCountries, selectCountryById } from '../../../../store/reducers/countrySlice';
 import { selectUser } from './../../../../store/reducers/users';
-
 
 const CountryTable = () => {
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const { data, status, error } = useSelector(selectAccounts);
+  
+  const { countryData } = useSelector(selectCountries);
   const { user } = useSelector(selectUser);
 
   const logged = user ? user.first_name : 'anonymous';
 
-  console.log({data});
+  console.log({countryData});
+  
+  const handleDelete = (id) => {
+    if(prices.status !== 'deleted') {
+      if (window.confirm("Are you sure you want to delete this country "+ id + "?")) {
+        dispatch(updateCurrency({currency_code: id, status: 'deleted'}));
+        window.location.reload(true);
+      }
+    }
+  };
 
-  const [details, setDetails] = useState([])
-  const columns = [
-    { key: 'first_name', _style: { width: '20%' }},
-    { key: 'last_name', sorter: false },
-    { key: 'email', sorter: false },
-    { key: 'status', _style: { width: '20%' }, sorter: true, filter: true },
-    { key: 'show_details', label: 'Action', _style: { width: '1%' }, sorter: false, filter: false }
-  ]
+  const [selected, setSelected] = useState([2, 3])
+  const loadData = currenciesData.map((item, id) => {
+    const _selected = selected.includes(id)
+    return {
+      ...item,
+      id,
+      _selected,
+      _classes: [item._classes, _selected && 'table-selected'],
+    }
+  })
+
+
+  const check = (e, id) => {
+    if (e.target.checked) {
+      setSelected([...selected, id])
+    } else {
+      setSelected(selected.filter((itemId) => itemId !== id))
+    }
+  }
 
   const getBadge = (status) => {
     switch (status) {
@@ -41,99 +59,72 @@ const CountryTable = () => {
         return 'active'
     }
   }
-
-  const toggleDetails = (index) => {
-    const position = details.indexOf(index)
-    let newDetails = details.slice()
-    if (position !== -1) {
-      newDetails.splice(position, 1)
-    } else {
-      newDetails = [...details, index]
-    }
-    setDetails(newDetails)
-  }
-
-  const handleDelete = (id) => {
-    if (window.confirm("Are you sure you want to delete this account?")) {
-      //Just change status to deleted
-      dispatch((updateAccount({ id, status: 'deleted'})));
-      window.location.reload(true);
-    }
-  };
  
   return (
     <CRow>
       <CCol xs={12}>
         <CCard className="mb-4">
           <CCardHeader>
-            <strong>Users</strong> <small>All Records</small>
-            
+            <strong>Vendor Prices</strong> <small>All Records</small>
           </CCardHeader>
           <CCardBody>
             <CSmartTable
             activePage={1}
             cleaner
             clickableRows
-            columns={columns}
-            columnFilter
+            columns={[
+               { key: 'country', label: 'Country' },
+               { key: 'country_code', label: 'Country Code' },
+               { key: 'updated_by', label: 'Updated By' },
+               { key: 'date_updated', label: 'Date Updated' },
+               { key: 'status', label: 'Status' },
+               'action',
+            ]}
+            tableFilter
             columnSorter
             footer
-            items={data}
+            items={countryData}
             itemsPerPageSelect
-            itemsPerPage={10}
+            itemsPerPage={20}
             pagination
-            scopedColumns={{
-              status: (item) => (
-                <td>
-                  <CBadge color={getBadge(item.status)}>{item.status}</CBadge>
-                </td>
-              ),
-              show_details: (item) => {
-                return (
-                  <td className="py-2">
-                    <CButton
-                      color="primary"
-                      variant="outline"
-                      shape="square"
-                      size="sm"
-                      onClick={() => {
-                        toggleDetails(item.id)
-                      }}
-                    >
-                      {details.includes(item.id) ? 'Hide' : 'Show'}
-                    </CButton>
-                  </td>
-                )
-              },
-              details: (item) => {
-                return (
-                  <CCollapse visible={details.includes(item.id)}>
-                    <CCardBody>
-                      <h5>ID: {item.id} </h5>
-                      <p className="text-muted">Last Access: {item.last_access}</p>
-                      <CButton size="sm" color="light" href={`/user/${item.id}`}>
-                        View / Update
-                      </CButton>
-                      <CButton size="sm" color="dark" className="ml-1" href={`/user/delete/${item.id}`}>
-                        Delete
-                      </CButton>
-                    </CCardBody>
-                  </CCollapse>
-                )
-              },
-            }}
             selectable
-            sorterValue={{ column: 'first_name', state: 'asc' }}
-            tableFilter
-            tableHeadProps={{
-              color: 'danger',
-            }}
-            tableProps={{
-              striped: true,
-              hover: true,
-              responsive: true,
-            }}
-          />
+            scopedColumns={{
+               select: (item) => {
+                 return (
+                   <td>
+                     <CFormCheck
+                       id={`checkbox${item.id}`}
+                       checked={item._selected}
+                       onChange={(e) => check(e, item.id)}
+                     />
+                     <CFormLabel variant="custom-checkbox" htmlFor={`checkbox${item.id}`} />
+                   </td>
+                 )
+               },
+               status: (item) => (
+                 <td>
+                   <CBadge color={getBadge(item.status)}>{item.status}</CBadge>
+                 </td>
+               ),
+               action: (item) => (
+                  <td>
+                    <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <CButton size="sm" color="light" className="ml-1" onClick={() => handleDelete(`${item.country_code}`)}>
+                           Delete
+                        </CButton>
+                        <CButton size="sm" color="dark" onClick={() => navigate(`/currency/${item.country_code}`)}>
+                           View
+                        </CButton>
+                    </div>
+                  </td>
+               ),
+             }}
+             tableProps={{
+               hover: true,
+               striped: true,
+               responsive: true,
+             }}
+           />
           </CCardBody>
         </CCard>
       </CCol>
@@ -141,5 +132,6 @@ const CountryTable = () => {
     
   )
 }
+
 
 export default CountryTable

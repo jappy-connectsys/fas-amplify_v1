@@ -25,11 +25,11 @@ import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { createCustomer, selectCustomers, selectCustomerId } from './../../../../store/reducers/customerSlice';
 import { selectUser } from './../../../../store/reducers/users';
-import { selectCurrencies } from '../../../../store/reducers/references/currencySlice';
-import { selectCountries } from '../../../../store/reducers/references/countrySlice';
-import { selectPaymentTerms } from '../../../../store/reducers/references/paymenttermSlice';
-import { selectPostingGroups } from '../../../../store/reducers/references/pstgroupSlice';
-import { selectPaymentModes } from '../../../../store/reducers/references/paymentmodeSlice';
+import { selectCurrencies } from '../../../../store/reducers/currencySlice';
+import { selectCountries } from '../../../../store/reducers/countrySlice';
+import { selectPaymentTerms } from '../../../../store/reducers/paymenttermSlice';
+import { selectPostingGroups } from '../../../../store/reducers/pstgroupSlice';
+import { selectPaymentModes } from '../../../../store/reducers/paymentmodeSlice';
 
 
 

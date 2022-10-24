@@ -22,8 +22,8 @@ import { AppPopper, AppToast } from './../../../../components';
 
 import { selectUser } from './../../../../store/reducers/users';
 import { updateProduct, selectProductId } from './../../../../store/reducers/productSlice';
-import { selectPostingGroups } from '../../../../store/reducers/references/pstgroupSlice';
-import { selectProductCategories } from '../../../../store/reducers/references/productCategorySlice';
+import { selectPostingGroups } from '../../../../store/reducers/pstgroupSlice';
+import { selectProductCategories } from '../../../../store/reducers/productCategorySlice';
 
 
 

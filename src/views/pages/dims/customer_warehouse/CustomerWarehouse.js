@@ -16,7 +16,7 @@ import {
     GetCustomerWarehouse, 
     AddCustomerWarehouse, 
     UpdateCustomerWarehouse
-} from '../../../../store/reducers/references/customerWarehouseSlice';
+} from '../../../../store/reducers/customerWarehouseSlice';
 
 
 function CustomerWarehouse(){
@@ -255,7 +255,7 @@ function CustomerWarehouse(){
                 keyboard={false}
                 visible={openModal}
             >
-                <CModalHeader closeButton={false}>
+                <CModalHeader closeButton={true}>
                     <CModalTitle>
                     {modalType === "add" ? 'Add Customer Warehouse' : 'Edit Customer Warehouse'}
                     </CModalTitle>
@@ -423,25 +423,30 @@ function CustomerWarehouse(){
                     <div className="position-absolute bottom-90 start-0" style={{paddingLeft:'10px'}}>
                         {mes ? mes : ''}
                     </div>
+
+                    <CButton 
+                        disabled={customerWarehouseAddLoading === 'loading'}
+                        style={{marginRight:'5px'}} color="light" 
+                        onClick={() => handleCloseModal()}
+                    >
+                        Close
+                    </CButton>
+                    
                     <div>
                         {modalType === "add" ? (
                             <CButton 
                             disabled={customerWarehouseAddLoading === 'loading'}
-                            style={{marginRight:'5px'}} color="success"
-                                onClick={() => handleSubmit("add")}>Add</CButton> 
+                            style={{marginRight:'5px'}} color="dark"
+                                onClick={() => handleSubmit("add")}>Add record</CButton> 
                             ) : 
                             modalType === "edit" ? (
                             <CButton
                             disabled={customerWarehouseAddLoading === 'loading'}
-                            style={{marginRight:'5px'}} color="success"
-                                onClick={() => handleSubmit("edit")}>Save</CButton> 
+                            style={{marginRight:'5px'}} color="dark"
+                                onClick={() => handleSubmit("edit")}>Save changes</CButton> 
                             ) :
                             ''
                         }
-                        <CButton 
-                         disabled={customerWarehouseAddLoading === 'loading'}
-                        style={{marginLeft:'5px'}} color="secondary" 
-                        onClick={() => handleCloseModal()}>Close</CButton>
                     </div>
                 </CModalFooter>
             </CModal>
@@ -454,7 +459,7 @@ function CustomerWarehouse(){
           <CCard className="mb-4">
             <CCardHeader>
                 <label style={{marginTop:3}}><strong>Customer Warehouse</strong> <small>All Records</small></label>
-                <CButton color="success" 
+                <CButton color="info" 
                     style={{
                     marginTop:3,padding:'4px 12px 4px 12px',fontSize:'12px',
                     float:'right',fontWeight:600, color:'white'
@@ -483,7 +488,7 @@ function CustomerWarehouse(){
                         return (
                           <td className="py-2">
                             <CButton
-                              color="primary"
+                              color="info"
                               variant="outline"
                               shape="square"
                               size="sm"
@@ -500,7 +505,7 @@ function CustomerWarehouse(){
                 sorterValue={{ column: 'date_created', state: 'asc' }}
                 tableFilter
                 tableHeadProps={{
-                  color: 'danger',
+                  color: 'info',
                 }}
                 tableProps={{
                   striped: true,

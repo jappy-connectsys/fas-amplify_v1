@@ -10,13 +10,13 @@ import { CSmartTable, CCard, CCardBody, CCardHeader, CCol, CRow, CButton,
   CFormSelect
 } from '@coreui/react-pro'
 import { useDispatch, useSelector } from 'react-redux'
-import { getCompanies } from '../../../../store/reducers/companySlice';
+import { GetCompanies } from '../../../../store/reducers/companySlice';
 import { 
     ClearCompanyWarehouse, 
     GetCompanyWarehouse, 
     AddCompanyWarehouse, 
     UpdateCompanyWarehouse
-} from '../../../../store/reducers/references/companyWarehouseSlice';
+} from '../../../../store/reducers/companyWarehouseSlice';
 
 
 function CompanyWarehouse(){
@@ -56,7 +56,7 @@ function CompanyWarehouse(){
     useEffect(()=>{
         dispatch(ClearCompanyWarehouse())
         dispatch(GetCompanyWarehouse())
-        dispatch(getCompanies())
+        dispatch(GetCompanies())
     }, [dispatch])
 
     useEffect(()=>{
@@ -263,8 +263,9 @@ function CompanyWarehouse(){
                 className="position-fixed"
                 keyboard={false}
                 visible={openModal}
+                portal={false}
             >
-                <CModalHeader closeButton={false}>
+                <CModalHeader closeButton={true}>
                     <CModalTitle>
                     {modalType === "add" ? 'Add Company Warehouse' : 'Edit Company Warehouse'}
                     </CModalTitle>
@@ -451,28 +452,35 @@ function CompanyWarehouse(){
                     </CForm>
                 </CModalBody>
                 <CModalFooter>
-                    <div className="position-absolute bottom-90 start-0" style={{paddingLeft:'10px'}}>
-                        {mes ? mes : ''}
-                    </div>
+
                     <div>
+                        <div className="position-absolute bottom-90 start-0" style={{paddingLeft:'10px'}}>
+                            {mes ? mes : ''}
+                        </div>
+
+                        <CButton 
+                            disabled={companyWarehouseAddLoading === 'loading'}
+                            style={{marginRight:'5px'}} color="light" 
+                            onClick={() => handleCloseModal()}
+                        >
+                            Close
+                        </CButton>
+                    
                         {modalType === "add" ? (
                             <CButton 
                             disabled={companyWarehouseAddLoading === 'loading'}
-                            style={{marginRight:'5px'}} color="success"
-                                onClick={() => handleSubmit("add")}>Add</CButton> 
+                            style={{marginRight:'5px'}} color="dark"
+                                onClick={() => handleSubmit("add")}>Add record</CButton> 
                             ) : 
                             modalType === "edit" ? (
                             <CButton
                             disabled={companyWarehouseAddLoading === 'loading'}
-                            style={{marginRight:'5px'}} color="success"
-                                onClick={() => handleSubmit("edit")}>Save</CButton> 
+                            style={{marginRight:'5px'}} color="dark"
+                                onClick={() => handleSubmit("edit")}>Save changes</CButton> 
                             ) :
                             ''
                         }
-                        <CButton 
-                         disabled={companyWarehouseAddLoading === 'loading'}
-                        style={{marginLeft:'5px'}} color="secondary" 
-                        onClick={() => handleCloseModal()}>Close</CButton>
+
                     </div>
                 </CModalFooter>
             </CModal>
@@ -480,12 +488,12 @@ function CompanyWarehouse(){
     }
 
     return (
-        <CRow>
+      <CRow>
         <CCol xs={12}>
           <CCard className="mb-4">
             <CCardHeader>
                 <label style={{marginTop:3}}><strong>Company Warehouse</strong> <small>All Records</small></label>
-                <CButton color="success" 
+                <CButton color="info" 
                     style={{
                     marginTop:3,padding:'4px 12px 4px 12px',fontSize:'12px',
                     float:'right',fontWeight:600, color:'white'
@@ -514,7 +522,7 @@ function CompanyWarehouse(){
                         return (
                           <td className="py-2">
                             <CButton
-                              color="primary"
+                              color="info"
                               variant="outline"
                               shape="square"
                               size="sm"
@@ -531,11 +539,12 @@ function CompanyWarehouse(){
                 sorterValue={{ column: 'date_created', state: 'asc' }}
                 tableFilter
                 tableHeadProps={{
-                  color: 'danger',
+                  color: 'info',
                 }}
                 tableProps={{
                   striped: true,
                   hover: true,
+                  responsive: true,
                 }}
               />
             </CCardBody>

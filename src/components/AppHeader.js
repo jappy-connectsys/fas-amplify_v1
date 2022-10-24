@@ -1,6 +1,6 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
-import { useSelector, useDispatch } from 'react-redux'
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import {
   CButtonGroup,
@@ -13,23 +13,23 @@ import {
   CHeaderToggler,
   CNavLink,
   CNavItem,
-} from '@coreui/react-pro'
-import CIcon from '@coreui/icons-react'
-import { cilMenu, cilMoon, cilSun } from '@coreui/icons'
+} from '@coreui/react-pro';
+import CIcon from '@coreui/icons-react';
+import { cilMenu, cilMoon, cilSun } from '@coreui/icons';
 
-import { AppBreadcrumb } from './index'
+import { AppBreadcrumb } from './index';
 
 import {
   AppHeaderDropdown,
   AppHeaderDropdownNotif,
-} from './header/index'
+} from './header/index';
 
-import { logo } from 'src/assets/brand/logo'
+import { logo } from '../assets/brand/logo';
 
 import { SignOut } from '../store/reducers/users';
 
 const AppHeader = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const { user, token } = useSelector((state) => state.user);

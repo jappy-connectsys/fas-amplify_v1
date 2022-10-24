@@ -131,7 +131,7 @@ function RoleTable() {
         keyboard={false}
         visible={openModal}
       >
-        <CModalHeader closeButton={false}>
+        <CModalHeader closeButton={true}>
             <CModalTitle>
                 {modalType === "add" ? 'Add New Role' : 'Edit Role'}
             </CModalTitle>
@@ -168,25 +168,31 @@ function RoleTable() {
             <div className="position-absolute bottom-90 start-0" style={{paddingLeft:'10px'}}>
                 {mes ? mes : ''}
             </div>
+
+            <CButton 
+              disabled={roleAddLoading === "loading"}
+              style={{marginRight:'5px'}} color="light" 
+              onClick={() => handleCloseModal()}
+            >
+              Close
+            </CButton>
+
             <div>
                 {modalType === "add" ? (
                     <CButton 
                       disabled={roleAddLoading === "loading"}
-                      style={{marginRight:'5px'}} color="success"
-                        onClick={() => handleAdd()}>Add</CButton> 
+                      style={{marginRight:'5px'}} color="dark"
+                        onClick={() => handleAdd()}>Add record</CButton> 
                     ) : 
                     modalType === "edit" ? (
                       <CButton 
                       disabled={roleEditLoading === "loading"}
-                      style={{marginRight:'5px'}} color="success"
-                        onClick={() => handleSave()}>Save</CButton> 
+                      style={{marginRight:'5px'}} color="dark"
+                        onClick={() => handleSave()}>Save changes</CButton> 
                     ) :
                     ''
                 }
-                <CButton 
-                  disabled={roleAddLoading === "loading"}
-                  style={{marginLeft:'5px'}} color="secondary" 
-                onClick={() => handleCloseModal()}>Close</CButton>
+                
             </div>
         </CModalFooter>
       </CModal>
@@ -203,7 +209,7 @@ function RoleTable() {
         <CCard className="mb-4">
           <CCardHeader>
             <label style={{marginTop:3}}><strong>Role</strong> <small>All Records</small></label>
-            <CButton color="success" 
+            <CButton color="info" 
                 style={{
                   marginTop:3,padding:'4px 12px 4px 12px',fontSize:'12px',
                   float:'right',fontWeight:600, color:'white'
@@ -219,7 +225,6 @@ function RoleTable() {
               cleaner
               clickableRows
               columns={columns}
-              columnFilter
               columnSorter
               footer
               items={data}
@@ -231,14 +236,14 @@ function RoleTable() {
                   return (
                     <td className="py-2">
                       <CButton
-                        color="primary"
+                        color="info"
                         variant="outline"
                         shape="square"
                         size="sm"
                         onClick={() => handleUpdate(item)}
                         style={{marginLeft:11,marginTop:8}}
                       >
-                        Update
+                        View
                       </CButton>
                     </td>
                   )
@@ -248,11 +253,12 @@ function RoleTable() {
               sorterValue={{ column: 'product_name', state: 'asc' }}
               tableFilter
               tableHeadProps={{
-                color: 'danger',
+                color: 'info',
               }}
               tableProps={{
                 striped: true,
                 hover: true,
+                responsive: true
               }}
             />
           </CCardBody>

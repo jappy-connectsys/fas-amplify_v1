@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
 import {
   CBadge,
   CDropdown,
@@ -6,27 +6,26 @@ import {
   CDropdownItem,
   CDropdownMenu,
   CDropdownToggle,
-  CDropdownDivider
-} from '@coreui/react-pro'
-import CIcon from '@coreui/icons-react'
+} from '@coreui/react-pro';
+import CIcon from '@coreui/icons-react';
 import {
   cilBell,
-} from '@coreui/icons'
+} from '@coreui/icons';
 import { Link, useNavigate } from 'react-router-dom';
 
-import { useDispatch, useSelector } from 'react-redux'
-import { ReadNotification, ClearNotification, GetNotification } from '../../store/reducers/notificationSlice'
+import { useDispatch, useSelector } from 'react-redux';
+import { ReadNotification, ClearNotification, GetNotification } from '../../store/reducers/notificationSlice';
 
 const AppHeaderDropdownNotif = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const { user } = useSelector(state => state.users)
+  const { user } = useSelector(state => state.user)
 
   const itemsCount = 5
 
   useEffect(()=>{
-    dispatch(ClearNotification())
-    // dispatch(GetNotification(user?.id))
+    dispatch(ClearNotification());
+    dispatch(GetNotification(user?.id));
 }, [dispatch])
 
 const { 
@@ -81,7 +80,7 @@ const data = notificationData
 
   const handleView = (notification_id, reference_id) => {
     dispatch(ReadNotification(notification_id)).then(()=>{
-      // dispatch(GetNotification(user?.id))
+      dispatch(GetNotification(user?.id))
       navigate(`/po?po_number=${reference_id}`)
     })
   }
@@ -166,4 +165,4 @@ const data = notificationData
   )
 }
 
-export default AppHeaderDropdownNotif
+export default AppHeaderDropdownNotif;

@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { CSmartTable, CCard, CCardBody, CCardHeader, CCol, CRow, CButton, CCollapse,
+import { 
+  CSmartTable, 
+  CCard, 
+  CCardBody, 
+  CCardHeader, 
+  CCol, 
+  CRow, 
+  CButton,
   CForm,
   CFormInput,
   CInputGroup,
@@ -12,18 +19,16 @@ import { CSmartTable, CCard, CCardBody, CCardHeader, CCol, CRow, CButton, CColla
   CModalFooter,
   CModal,
 } from '@coreui/react-pro'
-import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 import CIcon from '@coreui/icons-react';
 import { cilZoom } from '@coreui/icons';
 
-import { UpdateUser, AddUser, GetUsers, ClearUserManagement } from '../../../../store/reducers/userManagementSlice'
-import { GetRole, ClearRole } from '../../../../store/reducers/roleSlice'
+import { UpdateUser, AddUser, GetUsers, ClearUserManagement } from '../../../../store/reducers/userManagementSlice';
+import { GetRole, ClearRole } from '../../../../store/reducers/roleSlice';
 
 function UserTable() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const [openModal, setOpenModal] = useState(false)
   const [modalType, setModalType] = useState('')
@@ -220,7 +225,7 @@ function UserTable() {
       }
         dispatch(UpdateUser(payload)).then(()=>{
           setMes(
-            <label style={{color:'green',fontWeight:600}}>The User has been successfully updated.</label>
+            <label style={{color:'#000000',fontWeight:300}}>The User has been successfully updated.</label>
           )
           setTimeout(()=>{
             dispatch(GetUsers())
@@ -270,7 +275,7 @@ function UserTable() {
         keyboard={false}
         visible={openModal}
       >
-        <CModalHeader closeButton={false}>
+        <CModalHeader closeButton={true}>
             <CModalTitle>
                 {modalType === "add" ? 'Add New User' : 'Edit User'}
             </CModalTitle>
@@ -396,25 +401,31 @@ function UserTable() {
             <div className="position-absolute bottom-90 start-0" style={{paddingLeft:'10px'}}>
                 {mes ? mes : ''}
             </div>
+
+            <CButton 
+              disabled={userAddLoading === "loading"}
+              style={{marginRight:'5px'}} color="light" 
+              onClick={() => handleCloseModal()}
+            >
+              Close
+            </CButton>
+
             <div>
                 {modalType === "add" ? (
                     <CButton 
                       disabled={userAddLoading === "loading"}
-                      style={{marginRight:'5px'}} color="success"
-                        onClick={() => handleAdd()}>Add</CButton> 
+                      style={{marginRight:'5px'}} color="dark"
+                        onClick={() => handleAdd()}>Add record</CButton> 
                     ) : 
                     modalType === "edit" ? (
                       <CButton 
                       disabled={userEditLoading === "loading"}
-                      style={{marginRight:'5px'}} color="success"
-                        onClick={() => handleSave()}>Save</CButton> 
+                      style={{marginRight:'5px'}} color="dark"
+                        onClick={() => handleSave()}>Save changes</CButton> 
                     ) :
                     ''
                 }
-                <CButton 
-                  disabled={userAddLoading === "loading"}
-                  style={{marginLeft:'5px'}} color="secondary" 
-                onClick={() => handleCloseModal()}>Close</CButton>
+
             </div>
         </CModalFooter>
       </CModal>
@@ -428,7 +439,7 @@ function UserTable() {
         <CCard className="mb-4">
           <CCardHeader>
             <label style={{marginTop:3}}><strong>Users</strong> <small>All Records</small></label>
-            <CButton color="success" 
+            <CButton color="info" 
                 style={{
                   marginTop:3,padding:'4px 12px 4px 12px',fontSize:'12px',
                   float:'right',fontWeight:600, color:'white'
@@ -456,14 +467,14 @@ function UserTable() {
                   return (
                     <td className="py-2">
                       <CButton
-                        color="primary"
+                        color="info"
                         variant="outline"
                         shape="square"
                         size="sm"
-                        onClick={() =>  handleUpdate(item)}
+                        onClick={() => handleUpdate(item)}
                         style={{marginLeft:11,marginTop:8}}
                       >
-                        Update
+                        View
                       </CButton>
                     </td>
                   )
@@ -473,11 +484,12 @@ function UserTable() {
               sorterValue={{ column: 'created_at', state: 'asc' }}
               tableFilter
               tableHeadProps={{
-                color: 'danger',
+                color: 'info',
               }}
               tableProps={{
                 striped: true,
                 hover: true,
+                responsive: true,
               }}
             />
           </CCardBody>

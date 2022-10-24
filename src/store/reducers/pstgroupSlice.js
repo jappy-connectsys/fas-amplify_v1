@@ -7,11 +7,11 @@ const initialState = {
   message: null,
 }
 
-export const GetCompanies = createAsyncThunk(
-  'company/GetCompanies',
+export const GetPostingGroups = createAsyncThunk(
+  'pstgroup/GetPostingGroups',
   async (_, { rejectWithValue, dispatch }) => {
       try {
-          const response = await api.get(`/items/company`)
+          const response = await api.get(`/items/posting_group`)
           return response.data.data;
       } catch (err) {
           return rejectWithValue(err.response.data)
@@ -19,11 +19,11 @@ export const GetCompanies = createAsyncThunk(
   }
 );
 
-export const AddCompany = createAsyncThunk(
-  'company/AddCompany',
+export const AddPostingGroup = createAsyncThunk(
+  'pstgroup/AddPostingGroup',
   async (payload, { rejectWithValue, dispatch }) => {
       try {
-          const response = await api.post(`/items/company`,payload)
+          const response = await api.post(`/items/posting_group`,payload)
           console.log('~~~', response);
           return true
       } catch (err) {
@@ -32,12 +32,12 @@ export const AddCompany = createAsyncThunk(
   }
 );
 
-export const UpdateCompany = createAsyncThunk(
-  'company/UpdateCompany',
+export const UpdatePostingGroup = createAsyncThunk(
+  'pstgroup/UpdatePostingGroup',
   async (payload, { rejectWithValue, dispatch }) => {
       const { id, ...rest } = payload;
       try {
-          const response = await api.patch(`/items/company/${id}`,{...rest})
+          const response = await api.patch(`/items/posting_group/${id}`,{...rest})
           console.log('~~~', response);
           return true
       } catch (err) {
@@ -46,54 +46,54 @@ export const UpdateCompany = createAsyncThunk(
   }
 );
 
-export const ClearCompanies = createAsyncThunk(
-  'company/ClearCompanies',
+export const ClearPostingGroups = createAsyncThunk(
+  'pstgroup/ClearPostingGroups',
   async (_, { rejectWithValue, dispatch }) => {
       return true;
   }
 );
 
-export const companySlice = createSlice({
-  name: "company",
+export const pstgroupSlice = createSlice({
+  name: "pstgroup",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(ClearCompanies.fulfilled, (state, action) => {
+    builder.addCase(ClearPostingGroups.fulfilled, (state, action) => {
         state.loading = 'idle';
         state.message = null;
     });
 
-    builder.addCase(GetCompanies.pending, (state, action) => {
+    builder.addCase(GetPostingGroups.pending, (state, action) => {
         state.loading = 'loading';
     });
-    builder.addCase(GetCompanies.fulfilled, (state, action) => {
+    builder.addCase(GetPostingGroups.fulfilled, (state, action) => {
         state.loading = 'success';
         state.data = action.payload;
     });
-    builder.addCase(GetCompanies.rejected, (state, action) => {
+    builder.addCase(GetPostingGroups.rejected, (state, action) => {
         state.loading = 'failed';
         state.message = action.payload;
     });
 
-    builder.addCase(AddCompany.pending, (state) => {
+    builder.addCase(AddPostingGroup.pending, (state) => {
         state.loading = 'loading';
     });
-    builder.addCase(AddCompany.fulfilled, (state, action) => {
+    builder.addCase(AddPostingGroup.fulfilled, (state, action) => {
         state.loading = 'success';
         state.data = action.payload;
     });
-    builder.addCase(AddCompany.rejected, (state, action) => {
+    builder.addCase(AddPostingGroup.rejected, (state, action) => {
         state.loading = 'failed';
         state.message = action.payload;
     });
 
-    builder.addCase(UpdateCompany.pending, (state) => {
+    builder.addCase(UpdatePostingGroup.pending, (state) => {
         state.loading = 'loading';
     });
-    builder.addCase(UpdateCompany.fulfilled, (state, action) => {
+    builder.addCase(UpdatePostingGroup.fulfilled, (state, action) => {
         state.loading = 'success';
     });
-    builder.addCase(UpdateCompany.rejected, (state, action) => {
+    builder.addCase(UpdatePostingGroup.rejected, (state, action) => {
         state.loading = 'failed';
         state.message = action.payload;
     });
@@ -102,7 +102,7 @@ export const companySlice = createSlice({
 
 })
 
-export const selectCompanies = (state) => state.company;
-export const selectCompanyId = (state, id) => state.company.data.find((post) => post.company_id === id);
+export const selectPostingGroups = (state) => state.pstgroup;
+export const selectPostingGroupId = (state, id) => state.pstgroup.data.find((post) => post.pstgroup_id === id);
 
-export default companySlice.reducer;
+export default pstgroupSlice.reducer;

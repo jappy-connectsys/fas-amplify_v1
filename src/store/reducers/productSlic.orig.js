@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import api from '../../../services/api';
+import api from '../../services/api';
 
-export const getProductCategory = createAsyncThunk(
-  'product_category/getProductCategory', 
+export const getProducts = createAsyncThunk(
+  'product/getProducts', 
   async () => {
   try {
-      const response = await api.get(`/items/product_category/`)
+      const response = await api.get(`/items/product?sort=-product_id`)
       return response.data.data;
   } catch (err) {
     if (!err.response) {
@@ -17,11 +17,12 @@ export const getProductCategory = createAsyncThunk(
   }
 });
 
-export const createProductCategory = createAsyncThunk(
-  'product_category/createProductCategory', 
+export const createProduct = createAsyncThunk(
+  'product/createProduct', 
   async (initialPost) => {
   try {
-      const response = await api.post(`/items/product_category/`, initialPost)
+      const response = await api.post(`/items/product/`, initialPost)
+      console.log('created: ' + response.data.data)
       return response.data.data;
   } catch (err) {
       console.error(err.response.data);
@@ -31,12 +32,12 @@ export const createProductCategory = createAsyncThunk(
   }
 });
 
-export const updateProductCategory = createAsyncThunk(
-  'product_category/updateProductCategory', 
+export const updateProduct = createAsyncThunk(
+  'product/updateProduct', 
   async (initialPost) => {
-  const { category_id } = initialPost;
+  const { product_id } = initialPost;
   try {
-      const response = await api.patch(`/items/product_category/${category_id}`, initialPost)
+      const response = await api.patch(`/items/product/${product_id}`, initialPost)
       console.log('updated: ' + response.data.data)
       if (response?.status === 200) return initialPost;
         return `${response?.status}: ${response?.statusText}`;
@@ -50,12 +51,12 @@ export const updateProductCategory = createAsyncThunk(
   }
 });
 
-export const deleteProductCategory = createAsyncThunk(
-  'product_category/deleteProductCategory', 
+export const deleteProduct = createAsyncThunk(
+  'product/deleteProduct', 
   async (initialPost) => {
   const { id } = initialPost;
   try {
-      const response = await api.delete(`/items/product_category/${id}`)
+      const response = await api.delete(`/items/product/${id}`)
       if (response?.status === 200) return initialPost;
       return `${response?.status}: ${response?.statusText}`;
   } catch (err) {
@@ -66,81 +67,81 @@ export const deleteProductCategory = createAsyncThunk(
 
 //Initial State
 const initialState = {
-  pcategoryData: [],
+  data: [],
   status: 'idle', //'idle' | 'loading' | 'success' | 'failed'
   error: null,
 }
 
-export const productCategorySlice = createSlice({
-  name: "product_category",
+export const productSliceOrig = createSlice({
+  name: "product",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     /* GET */
-    builder.addCase(getProductCategory.pending, (state) => {
+    builder.addCase(getProducts.pending, (state) => {
       state.status = 'loading';
     });
-    builder.addCase(getProductCategory.fulfilled, (state, action) => {
+    builder.addCase(getProducts.fulfilled, (state, action) => {
         state.status = 'success';
-        state.pcategoryData = action.payload;
+        state.data = action.payload;
     });
-    builder.addCase(getProductCategory.rejected, (state, action) => {
+    builder.addCase(getProducts.rejected, (state, action) => {
       state.status = 'failed';
       state.error = action.payload
     });
 
     /* CREATE */
-    builder.addCase(createProductCategory.pending, (state) => {
+    builder.addCase(createProduct.pending, (state) => {
       state.status = 'loading';
     });
-    builder.addCase(createProductCategory.fulfilled, (state, action) => {
+    builder.addCase(createProduct.fulfilled, (state, action) => {
         if (action.payload === true) {
           state.status = 'success';
-          state.pcategoryData = action.payload;
+          state.data = action.payload;
         }
     });
-    builder.addCase(createProductCategory.rejected, (state, action) => {
+    builder.addCase(createProduct.rejected, (state, action) => {
       state.status = 'failed';
       state.error = action.payload
     });
 
     /* UPDATE */
-    builder.addCase(updateProductCategory.pending, (state) => {
+    builder.addCase(updateProduct.pending, (state) => {
       state.status = 'loading';
     });
-    builder.addCase(updateProductCategory.fulfilled, (state, action) => {
+    builder.addCase(updateProduct.fulfilled, (state, action) => {
         state.status = 'success';
-        if (!action.payload?.category_id) {
+        if (!action.payload?.product_id) {
           console.log('Update could not complete')
           console.log(action.payload)
           return;
         }
         const { id } = action.payload;
         action.payload.date_updated = new Date().toISOString();
-        const product_categories = state.pcategoryData.filter(post => post.category_id !== id);
-        state.data = [...product_categories, action.payload];
+        const products = state.data.filter(post => post.product_id !== id);
+        state.data = [...products, action.payload];
     });
-    builder.addCase(updateProductCategory.rejected, (state, action) => {
+    builder.addCase(updateProduct.rejected, (state, action) => {
       state.status = 'failed';
       state.error = action.payload
     });
 
     /* DELETE */
-    builder.addCase(deleteProductCategory.pending, (state) => {
+    builder.addCase(deleteProduct.pending, (state) => {
       state.status = 'loading';
     });
-    builder.addCase(deleteProductCategory.fulfilled, (state, action) => {
+    builder.addCase(deleteProduct.fulfilled, (state, action) => {
       state.status = 'success';
-      if (!action.payload?.category_id) {
+      if (!action.payload?.product_id) {
         console.log('Delete could not complete')
         console.log(action.payload)
         return;
       }
       const { id } = action.payload;
-      const product_categories = state.pcategoryData.filter(post => post.category_id !== id);
-      state.pcategoryData = product_categories;
+      const products = state.posts.filter(post => post.vendor_id !== id);
+      state.data = products;
     });
-    builder.addCase(deleteProductCategory.rejected, (state, action) => {
+    builder.addCase(deleteProduct.rejected, (state, action) => {
       state.status = 'failed';
       state.error = action.payload
     });
@@ -148,7 +149,8 @@ export const productCategorySlice = createSlice({
 });
 
 
-export const selectProductCategories = (state) => state.productcategory;
-export const selectProductCategoryId = (state, id) => state.productcategory.pcategoryData.find(post => post.category_id === id);
+export const selectProducts = (state) => state.product;
+export const selectProductId = (state, id) => state.product.data.find(post => post.product_id === id);
+export const productExist = (state, pname) => state.product.data.find(post => post.product_name === pname);
 
-export default productCategorySlice.reducer;
+export default productSliceOrig.reducer;

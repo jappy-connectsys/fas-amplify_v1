@@ -198,7 +198,7 @@ function NotificationTable(){
                 sorterValue={{ column: 'date_created', state: 'asc' }}
                 tableFilter
                 tableHeadProps={{
-                  color: 'danger',
+                  color: 'info',
                 }}
                 tableProps={{
                   striped: true,

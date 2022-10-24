@@ -13,9 +13,8 @@ import {
 } from '@coreui/react-pro'
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { createCurrency } from './../../../../store/reducers/references/currencySlice';
+import { createCurrency } from '../../../../store/reducers/currencySlice';
 import { selectUser } from './../../../../store/reducers/users';
-import { selectCountryId } from './../../../../store/reducers/references/countrySlice';
 
 const CurrencyAdd = () => {
   
@@ -25,15 +24,15 @@ const CurrencyAdd = () => {
 
   
   const { user } = useSelector(selectUser);
-
   
   const logged = user ? user.first_name : 'anonymous';
 
+  console.log(data);
 
   //Set Fields
-  const [currency_code, setCurrencyCode] = useState('');
-  const [country, setCountry] = useState('');
-  const [currency_description, setCurrencyDescription] = useState('');
+  const [currency_code, setCurrencyCode] = useState(data?.currency_code);
+  const [country, setCountry] = useState(data?.country);
+  const [currency_description, setCurrencyDescription] = useState(data?.currency_description);
   const [currencyStatus, setCurrencyStatus] = useState('active');
 
   //Form validation 
@@ -56,7 +55,7 @@ const CurrencyAdd = () => {
           setRequestStatus('pending');
           dispatch(createCurrency({ 
                 country,
-                description:currency_description,
+                description,
                 status: currencyStatus,
               })).unwrap();
   
@@ -91,7 +90,7 @@ const CurrencyAdd = () => {
      <CCol xs={12}>
        <CCard className="mb-4">
          <CCardHeader>
-          <CHeaderText className="header-brand mb-0 h1">Currency: </CHeaderText>
+          <CHeaderText className="header-brand mb-0 h1">Currency: {id}</CHeaderText>
          </CCardHeader>
          <CCardBody>
            <CForm className="row g-3 needs-validation"

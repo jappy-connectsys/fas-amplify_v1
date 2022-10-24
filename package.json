@@ -6,7 +6,7 @@
   "bugs": {
     "url": "https://github.com/middlewareuc/FASWeb"
   },
-  "proxy": "http://localhost:8572/",
+  "proxy": "http://localhost:8572",
   "repository": {
     "type": "git",
     "url": "git@github.com:middlewareuc/FASWeb.git"
@@ -39,6 +39,7 @@
     "classnames": "^2.3.1",
     "cli": "^1.0.1",
     "core-js": "^3.23.4",
+    "http-proxy-middleware": "^2.0.6",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-app-polyfill": "^3.0.0",

@@ -28,6 +28,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const { token, signing_in, errors_sign_in, success_sign_in } = useSelector((state) => state.user);
+
   useEffect(() => {
     if (token) {
       navigate("/dashboard");
@@ -83,9 +84,9 @@ const Login = () => {
           disabled={signing_in}
         >
           <h1>Login</h1>
-          <label className="text-medium-emphasis">
+          <p className="text-medium-emphasis">
             {msg ? msg : 'Sign In to your account' }
-          </label>
+          </p>
           <CInputGroup className="mb-3">
             <CInputGroupText>
               <CIcon icon={cilUser} />

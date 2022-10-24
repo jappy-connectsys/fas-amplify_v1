@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import api from '../../../services/api';
+import api from '../../services/api';
 
 const InitialState = {
     companyWarehouseLoading: 'idle',
@@ -19,7 +19,7 @@ export const ClearCompanyWarehouse = createAsyncThunk(
 
 export const GetCompanyWarehouse = createAsyncThunk(
     'company_warehouse/get_company_warehouse',
-    async (_, { rejectWithValue }) => {
+    async () => {
         try {
             const response = await api.get(`/items/company_warehouse`)
             return response.data.data;
@@ -31,7 +31,7 @@ export const GetCompanyWarehouse = createAsyncThunk(
 
 export const AddCompanyWarehouse = createAsyncThunk(
     'company_warehouse/add_company_warehouse',
-    async (initial, { rejectWithValue }) => {
+    async (initial, { rejectWithValue, _ }) => {
         const { id, ...rest} = initial
         try {
             const response = await api.post(`/items/company_warehouse`, {...rest})
@@ -103,8 +103,6 @@ export const company_warehouse = createSlice({
         state.companyWarehouseAddError = action.payload
     });
   },
-
-  
 })
 
 export const selectCompanyWarehouse = (state) => state.company_warehouse;

@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { selectVendorPrices, selectVendorPriceId, updateVendorPrice } from './../../../../store/reducers/vendorpriceSlice';
 import { selectUser } from './../../../../store/reducers/users';
-import { selectCurrencies } from '../../../../store/reducers/references/currencySlice';
+import { selectCurrencies } from '../../../../store/reducers/currencySlice';
 
 
 const VendorPriceUpdate = () => {

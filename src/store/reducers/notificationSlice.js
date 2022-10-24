@@ -16,7 +16,7 @@ export const ClearNotification = createAsyncThunk(
 
 export const ReadNotification = createAsyncThunk(
     'notification/read_notification',
-    async (id, { rejectWithValue, _ }) => {
+    async (id) => {
         const payload = {
             read_at: new Date().toISOString()
         }
@@ -32,7 +32,7 @@ export const ReadNotification = createAsyncThunk(
 
 export const GetNotification = createAsyncThunk(
     'notification/get_notification',
-    async (user_id, { rejectWithValue, _ }) => {
+    async (user_id) => {
         try {
             const response = await api.get(`/items/notification?filter[recipient][_eq]=${user_id}`)
             return response.data.data;

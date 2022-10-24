@@ -18,11 +18,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { createVendor, selectVendors } from './../../../../store/reducers/vendorSlice';
 import { selectUser } from './../../../../store/reducers/users';
-import { selectCurrencies } from '../../../../store/reducers/references/currencySlice';
-import { selectCountries } from '../../../../store/reducers/references/countrySlice';
-import { selectPaymentTerms } from '../../../../store/reducers/references/paymenttermSlice';
-import { selectPostingGroups } from '../../../../store/reducers/references/pstgroupSlice';
-import { selectPaymentModes } from '../../../../store/reducers/references/paymentmodeSlice';
+import { selectCurrencies } from '../../../../store/reducers/currencySlice';
+import { selectCountries } from '../../../../store/reducers/countrySlice';
+import { selectPaymentTerms } from '../../../../store/reducers/paymenttermSlice';
+import { selectPostingGroups } from '../../../../store/reducers/pstgroupSlice';
+import { selectPaymentModes } from '../../../../store/reducers/paymentmodeSlice';
 
 
 

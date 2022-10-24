@@ -7,11 +7,11 @@ const initialState = {
   message: null,
 }
 
-export const GetCompanies = createAsyncThunk(
-  'company/GetCompanies',
+export const GetPaymentTerms = createAsyncThunk(
+  'paymentterm/GetPaymentTerms',
   async (_, { rejectWithValue, dispatch }) => {
       try {
-          const response = await api.get(`/items/company`)
+          const response = await api.get(`/items/payment_terms`)
           return response.data.data;
       } catch (err) {
           return rejectWithValue(err.response.data)
@@ -19,11 +19,11 @@ export const GetCompanies = createAsyncThunk(
   }
 );
 
-export const AddCompany = createAsyncThunk(
-  'company/AddCompany',
+export const AddPaymentTerm = createAsyncThunk(
+  'paymentterm/AddPaymentTerm',
   async (payload, { rejectWithValue, dispatch }) => {
       try {
-          const response = await api.post(`/items/company`,payload)
+          const response = await api.post(`/items/payment_terms`,payload)
           console.log('~~~', response);
           return true
       } catch (err) {
@@ -32,12 +32,12 @@ export const AddCompany = createAsyncThunk(
   }
 );
 
-export const UpdateCompany = createAsyncThunk(
-  'company/UpdateCompany',
+export const UpdatePaymentTerm = createAsyncThunk(
+  'paymentterm/UpdatePaymentTerm',
   async (payload, { rejectWithValue, dispatch }) => {
       const { id, ...rest } = payload;
       try {
-          const response = await api.patch(`/items/company/${id}`,{...rest})
+          const response = await api.patch(`/items/payment_terms/${id}`,{...rest})
           console.log('~~~', response);
           return true
       } catch (err) {
@@ -46,54 +46,54 @@ export const UpdateCompany = createAsyncThunk(
   }
 );
 
-export const ClearCompanies = createAsyncThunk(
-  'company/ClearCompanies',
+export const ClearPaymentTerms = createAsyncThunk(
+  'paymentterm/ClearPaymentTerms',
   async (_, { rejectWithValue, dispatch }) => {
       return true;
   }
 );
 
-export const companySlice = createSlice({
-  name: "company",
+export const paymenttermSlice = createSlice({
+  name: "paymentterm",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(ClearCompanies.fulfilled, (state, action) => {
+    builder.addCase(ClearPaymentTerms.fulfilled, (state, action) => {
         state.loading = 'idle';
         state.message = null;
     });
 
-    builder.addCase(GetCompanies.pending, (state, action) => {
+    builder.addCase(GetPaymentTerms.pending, (state, action) => {
         state.loading = 'loading';
     });
-    builder.addCase(GetCompanies.fulfilled, (state, action) => {
+    builder.addCase(GetPaymentTerms.fulfilled, (state, action) => {
         state.loading = 'success';
         state.data = action.payload;
     });
-    builder.addCase(GetCompanies.rejected, (state, action) => {
+    builder.addCase(GetPaymentTerms.rejected, (state, action) => {
         state.loading = 'failed';
         state.message = action.payload;
     });
 
-    builder.addCase(AddCompany.pending, (state) => {
+    builder.addCase(AddPaymentTerm.pending, (state) => {
         state.loading = 'loading';
     });
-    builder.addCase(AddCompany.fulfilled, (state, action) => {
+    builder.addCase(AddPaymentTerm.fulfilled, (state, action) => {
         state.loading = 'success';
         state.data = action.payload;
     });
-    builder.addCase(AddCompany.rejected, (state, action) => {
+    builder.addCase(AddPaymentTerm.rejected, (state, action) => {
         state.loading = 'failed';
         state.message = action.payload;
     });
 
-    builder.addCase(UpdateCompany.pending, (state) => {
+    builder.addCase(UpdatePaymentTerm.pending, (state) => {
         state.loading = 'loading';
     });
-    builder.addCase(UpdateCompany.fulfilled, (state, action) => {
+    builder.addCase(UpdatePaymentTerm.fulfilled, (state, action) => {
         state.loading = 'success';
     });
-    builder.addCase(UpdateCompany.rejected, (state, action) => {
+    builder.addCase(UpdatePaymentTerm.rejected, (state, action) => {
         state.loading = 'failed';
         state.message = action.payload;
     });
@@ -102,7 +102,7 @@ export const companySlice = createSlice({
 
 })
 
-export const selectCompanies = (state) => state.company;
-export const selectCompanyId = (state, id) => state.company.data.find((post) => post.company_id === id);
+export const selectPaymentTerms = (state) => state.paymentterm;
+export const selectPaymentTermId = (state, id) => state.paymentterm.data.find((post) => post.payment_term_id === id);
 
-export default companySlice.reducer;
+export default paymenttermSlice.reducer;

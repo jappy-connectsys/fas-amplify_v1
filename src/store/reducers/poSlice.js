@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import api from '../../services/api';
-import axios from 'axios';
-import { REACT_APP_DIRECTUS_TOKEN } from '../../config';
+//import axios from 'axios';
+//import { REACT_APP_DIRECTUS_TOKEN } from '../../config';
 
 export const getPo = createAsyncThunk(
   'po/getPo', 
@@ -107,10 +107,13 @@ export const updatePo = createAsyncThunk(
   async (initialPost) => {
   const { po_header_id } = initialPost;
   try {
-      const response = await axios.patch(`/items/po_header/${po_header_id}`, initialPost, {
+      const response = await api.patch(`/items/po_header/${po_header_id}`, initialPost)
+      /*{
       headers: {
         Authorization: `Bearer ${REACT_APP_DIRECTUS_TOKEN}`,
-      }})
+        }
+      })*/
+      
       console.log('update po: ' + response.data.data)
       if (response?.status === 200) return initialPost;
         return `${response?.status}: ${response?.statusText}`;

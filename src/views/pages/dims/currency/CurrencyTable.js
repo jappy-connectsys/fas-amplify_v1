@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { CSmartTable, CCard, CCardBody, CCardHeader, CCol, CRow, CBadge, CButton, CCollapse, CFormCheck, CFormLabel } from '@coreui/react-pro'
+import { CSmartTable, CCard, CCardBody, CCardHeader, CCol, CRow, CBadge, CButton, CCollapse } from '@coreui/react-pro'
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { selectCurrencies, updateCurrency } from './../../../../store/reducers/references/currencySlice';
+import { selectCurrencies, UpdateCurrency } from '../../../../store/reducers/currencySlice';
 import { selectUser } from './../../../../store/reducers/users';
 
 
@@ -15,13 +15,12 @@ const CurrencyTable = () => {
 
   const logged = user ? user.first_name : 'anonymous';
 
-  const prices = {}
   console.log({currenciesData});
   
   const handleDelete = (id) => {
     if(prices.status !== 'deleted') {
       if (window.confirm("Are you sure you want to delete this currency "+ id + "?")) {
-        // dispatch(updateCurrency({currency_code: id, status: 'deleted'}));
+        dispatch(updateCurrency({currency_code: id, status: 'deleted'}));
         window.location.reload(true);
       }
     }

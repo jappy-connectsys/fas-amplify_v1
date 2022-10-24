@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import api from '../../../services/api';
+import api from '../../services/api';
 
 const InitialState = {
     customerWarehouseLoading: 'idle',
@@ -19,7 +19,7 @@ export const ClearCustomerWarehouse = createAsyncThunk(
 
 export const GetCustomerWarehouse = createAsyncThunk(
     'customer_warehouse/get_customer_warehouse',
-    async (_, { rejectWithValue }) => {
+    async () => {
         try {
             const response = await api.get(`/items/customer_warehouse`)
             return response.data.data;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import {
   CButton,
   CCard,
@@ -6,22 +6,13 @@ import {
   CCardHeader,
   CCol,
   CForm,
-  CFormCheck,
   CFormInput,
-  CFormFeedback,
-  CFormLabel,
-  CFormSelect,
-  CFormTextarea,
-  CInputGroup,
-  CInputGroupText,
   CRow,
-  CHeader,
   CHeaderText,
-  CDatePicker,
 } from '@coreui/react-pro'
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
-import { updateCountry, selectCountryId } from './../../../../store/reducers/references/countrySlice';
+//import { updateCountry, selectCountryId } from './../../../../store/reducers/references/countrySlice';
 import { selectUser } from './../../../../store/reducers/users';
 
 const CountryUpdate = () => {
@@ -34,13 +25,11 @@ const CountryUpdate = () => {
   const {id} = useParams();
   
   const { user } = useSelector(selectUser);
-  const data = useSelector((state) => selectCountryId(state, Number(id)));
-  // const profile = useSelector((state) => selectAccountProfile(state, Number(data.id)));
-  
+  const countryData = useSelector((state) => selectCountryId(state, Number(id)));
   
   const logged = user ? user.first_name : 'anonymous';
 
-  console.log({data})
+  console.log({countryData})
 
   //Set Fields
   const [country_abbr, setCountryAbbr] = useState(data?.country_abbr);
@@ -49,13 +38,6 @@ const CountryUpdate = () => {
   const [date_updated, setDateUpdated] = useState(data?.date_updated);
   const [updated_by, setUpdatedBy] = useState(data?.updated_by);
   const [countryStatus, setCountryStatus] = useState(data?.status);
-
-  const [first_name, setFirstName] = useState('');
-  const [last_name, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [role, setRole] = useState('');
-  const [app_module, setAppModule] = useState('');
-  const [task_description, setTaskDescription] = useState('');
 
   //Form validation 
   const [validated, setValidated] = useState(false);
@@ -134,74 +116,33 @@ const CountryUpdate = () => {
             <CRow xs={{ gutterY: 2 }}>
              <CCol md={4}>
               <CFormInput
-                 label="First Name" 
+                 label="Countr Abbr" 
                  type="text"
-                 id="first_name"
-                 feedbackValid="Looks good!"
-                 defaultValue={first_name}
-                 onChange={(e) => setFirstName(e.target.value)}
+                 id="country_abbr"
+                 defaultValue={country_abbr}
+                 onChange={(e) => setCountryAbbr(e.target.value)}
                  required
                />
              </CCol>
              <CCol md={4}>
               <CFormInput
-                 label="Last Name" 
+                 label="Country" 
                  type="text"
-                 id="last_name"
-                 feedbackValid="Looks good!"
-                 defaultValue={first_name}
-                 onChange={(e) => setLastName(e.target.value)}
+                 id="country"
+                 defaultValue={country}
+                 onChange={(e) => setCountry(e.target.value)}
                  required
                />
              </CCol>
              <CCol md={4}>
               <CFormInput
-                 label="Email" 
+                 label="Country Code" 
                  type="text"
-                 id="email"
-                 feedbackValid="Looks good!"
-                 defaultValue={email}
+                 id="country_code"
+                 defaultValue={country_code}
                  onChange={(e) => setEmail(e.target.value)}
                  required
                />
-             </CCol>
-            </CRow>
-
-            <CRow xs={{ gutterY: 4 }}>
-             <CCol md={12} className="bg-light p-3">
-              <CHeaderText className="header-brand mb-0 h3">Other Details</CHeaderText>
-             </CCol>
-             <CCol md={4}>
-              <CFormInput
-                 label="Role" 
-                 type="text"
-                 id="role"
-                 feedbackValid="Looks good!"
-                 defaultValue={role}
-                 onChange={(e) => setRole(e.target.value)}
-                 required
-               />
-             </CCol>
-             <CCol md={4}>
-              <CFormInput
-                 label="App Module" 
-                 type="text"
-                 id="app_module"
-                 feedbackValid="Looks good!"
-                 defaultValue={role}
-                 onChange={(e) => setAppModule(e.target.value)}
-                 required
-               />
-             </CCol>
-             <CCol md={6}>
-              <CFormTextarea
-                  id="task"
-                  label="task"
-                  rows="5"
-                  text="Task description"
-                  onChange={(e) => setTaskDescription(e.target.value)}
-                  defaultValue={task_description}
-                ></CFormTextarea>
              </CCol>
             </CRow>
 

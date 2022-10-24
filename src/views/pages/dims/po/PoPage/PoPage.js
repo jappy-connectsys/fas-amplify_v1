@@ -17,7 +17,7 @@ import { selectUser } from '../../../../../store/reducers/users';
 import { selectVendors } from '../../../../../store/reducers/vendorSlice';
 import { selectPos, selectPoId, clearPo, getPo, createPo, updatePo, getPOUsersApprover } from '../../../../../store/reducers/poSlice';
 import { selectPoDetail, getPoDetail, createPoDetail, updatePoDetail, deletePoDetail } from '../../../../../store/reducers/poDetailSlice';
-import { GetCompanyWarehouse, selectCompanyWarehouse } from '../../../../../store/reducers/references/companyWarehouseSlice';
+import { GetCompanyWarehouse, selectCompanyWarehouse } from '../../../../../store/reducers/companyWarehouseSlice';
 import PoAdd1stRow from './components/PoAdd1stRow'
 import PoAdd2ndRow from './components/PoAdd2ndRow'
 import PoAdd3rdRow from './components/PoAdd3rdRow'

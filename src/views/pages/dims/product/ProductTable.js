@@ -1,32 +1,88 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { 
-  CSmartTable, 
-  CCard, 
-  CCardBody, 
-  CCardHeader, 
-  CCol, 
-  CRow, 
-  CBadge, 
-  CButton, 
-  CCollapse,
-  CPopover, 
-  CToaster 
+import React, { useEffect, useState } from 'react'
+import { CSmartTable, CCard, CCardBody, CCardHeader, CCol, CRow, CButton,
+  CModalHeader,
+  CModalTitle,
+  CModalBody,
+  CModalFooter,
+  CModal,
+  CForm,
+  CFormInput,
+  CFormSelect
 } from '@coreui/react-pro';
-import { AppPopper, AppToast } from './../../../../components';
-
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router-dom';
-
-import { selectProducts, updateProduct } from './../../../../store/reducers/productSlice';
+import { 
+    ClearCustomerWarClearProductsehouse, 
+    GetProducts, 
+    AddProducts, 
+    UpdateProducts
+} from '../../../../store/reducers/productSlice';
 
 
 const ProductTable = () => {
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { added } = useParams();
-  
-  const { data } = useSelector(selectProducts);
+
+  //const { data:customerData } = useSelector((state) => state.customer)
+  const { loading, data, message } = useSelector((state) => state.product)
+
+  const [openModal, setOpenModal] = useState(false)
+  const [modalType, setModalType] = useState('')
+  const [mes, setMes] = useState('')
+
+  //Set Fields
+  const company_id = 1;
+  const [cs_product_id, setCSProductId] = useState('');
+  const [product_name, setProductName] = useState('');
+  const [category, setCategory] = useState('');
+  const [sub_category, setSubCategory] = useState('');
+  const [uom, setUom] = useState('');
+  const [upc, setUpc] = useState('');
+  const [upc_barcode, setUpcBarcode] = useState('');
+  const [sku, setSku] = useState('');
+  const [sku_barcode, setSkuBarcode] = useState('');
+  const [packaging_length, setPackagingLength] = useState('');
+  const [packaging_width, setPackagingWidth] = useState('');
+  const [packaging_height, setPackagingHeight] = useState('');
+  const [size, setSize] = useState('');
+  const [net_weight, setNetWeight] = useState('');
+  const [gross_weight, setGrossWeight] = useState('');
+  const [unit_type, setUnitType] = useState('');
+  const [qty_per_unit, setQtyPerUnit] = useState('');
+  const [ingredients, setIngredients] = useState('');
+  const [nutrition_facts, setNutritionFacts] = useState('');
+  const [eff_start_date, setEffStartDate] = useState('');
+  const [eff_end_date, setEffEndDate] = useState(fixDateReturn('2999-12-30'));
+  const [inventory_posting_group, setInventoryPostingGroup] = useState('');
+  const [gen_posting_group, setGenPostingGroup] = useState('');
+  const [input_vat_posting_group, setInputVatPostingGroup] = useState('');
+  const [output_vat_posting_group, setOutputVatPostingGroup] = useState('');
+  const [productStatus, setProductStatus] = useState('active');
+  const [date_created, setDateCreated] = useState(new Date().toISOString());
+  const [date_updated, setDateUpdated] = useState(new Date().toISOString());
+  const [updated_by, setUpdatedBy] = useState(logged);
+  const [created_by, setCreatedBy] = useState(logged);
+
+
+  useEffect(()=>{
+    dispatch(ClearProducts())
+    dispatch(GetProducts())
+    //dispatch(getCustomers())
+  }, [dispatch])
+
+  useEffect(()=>{
+      if(loading === "loading"){
+          setMes("loading...")
+      }
+    
+      if(message){
+          setMes(
+              <label style={{color:'red',fontWeight:600}}>
+                  Error:, {message}
+              </label>    
+          )
+      }
+  }, [loading, message])
+
 
   const [details, setDetails] = useState([])
   const columns = [
@@ -37,6 +93,118 @@ const ProductTable = () => {
     { key: 'status', _style: { width: '20%' }},
     { key: 'show_details', label: 'Action', _style: { width: '1%' }},
   ]
+
+  const productData = data.map((res)=> {
+    return ({
+    id: res.product_id, 
+    company_id: res.company_id,
+    cs_product_id: res.cs_product_id,
+    upc_barcode: res.upc_barcode,
+    sku_barcode: res.sku_barcode,
+    category: res.category,
+    sub_category: res.sub_category,
+    uom: res.uom,
+    size: res.size,
+    packaging_length: res.packaging_length,
+    packaging_width: res.packaging_width,
+    packaging_height: res.packaging_height,
+    net_weight: res.net_weight,
+    gross_weight: res.gross_weight,
+    ingredients: res.ingredients,
+    nutrition_facts: res.nutrition_facts,
+    unit_type: res.unit_type,
+    qty_per_unit: res.qty_per_unit,
+    inventory_posting_group: res.inventory_posting_group,
+    gen_posting_group: res.gen_posting_group,
+    input_vat_posting_group: res.input_vat_posting_group,
+    output_vat_posting_group: res.output_vat_posting_group,
+    status: productStatus,
+    updated_by: res.updated_by,
+    date_updated: res.date_updated,
+    date_created: new Date(res.date_created).toLocaleString("en-US")
+    })
+  });
+
+  const handleOpenModal = () => {
+    setCSProductId('');
+    setUpcBarcode('');
+    setSkuBarcode('');
+    setCategory('');
+    setSubCategory('');
+    setUom('');
+    setSize('');
+    setPackagingLength('');
+    setPackagingWidth('');
+    setPackagingHeight('');
+    setNetWeight('');
+    setGrossWeight('');
+    setIngredients('');
+    setNutritionFacts('');
+    setUnitType('');
+    setQtyPerUnit('');
+    setEffEndDate('');
+    setInventoryPostingGroup('');
+    setGenPostingGroup('');
+    setInputVatPostingGroup('');
+    setOutputVatPostingGroup('');
+    setProductStatus('');
+    setDateUpdated('');
+    setUpdatedBy('');
+
+    setOpenModal(true)
+    setModalType('add')
+    setMes('')
+  }
+
+  const handleCloseModal = () => {
+    setOpenModal(false)
+  }
+
+  const renderSuccess = (type, warehouseName) => {
+    if(type === "add"){
+        setMes(<span style={{color:'green',fontWeight:600}}>
+        {warehouseName} warehouse has been successfully added.
+        </span>)   
+    }else{
+        setMes(<span style={{color:'green',fontWeight:600}}>
+        {warehouseName} warehouse has been successfully updated.
+        </span>)   
+    }
+
+    setTimeout(()=>{
+      setCSProductId('');
+      setUpcBarcode('');
+      setSkuBarcode('');
+      setCategory('');
+      setSubCategory('');
+      setUom('');
+      setSize('');
+      setPackagingLength('');
+      setPackagingWidth('');
+      setPackagingHeight('');
+      setNetWeight('');
+      setGrossWeight('');
+      setIngredients('');
+      setNutritionFacts('');
+      setUnitType('');
+      setQtyPerUnit('');
+      setEffEndDate('');
+      setInventoryPostingGroup('');
+      setGenPostingGroup('');
+      setInputVatPostingGroup('');
+      setOutputVatPostingGroup('');
+      setProductStatus('');
+      setDateUpdated('');
+      setUpdatedBy('');
+
+      dispatch(GetCustomerWarehouse())
+
+      setOpenModal(false)
+      setMes('')
+    },1000)
+  }
+
+
 
   const getBadge = (status) => {
     switch (status) {

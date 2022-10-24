@@ -13,7 +13,7 @@ import {
 } from '@coreui/react-pro'
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
-import { updateCurrency, selectCurrencyId } from './../../../../store/reducers/references/currencySlice';
+import { updateCurrency, selectCurrencyId } from '../../../../store/reducers/currencySlice';
 import { selectUser } from './../../../../store/reducers/users';
 
 const CurrencyUpdate = () => {
@@ -59,7 +59,7 @@ const CurrencyUpdate = () => {
           dispatch(updateCurrency({   
                 currency_code: id,
                 country,
-                description: currency_description,
+                description,
                 status: currencyStatus,
               })).unwrap();
   

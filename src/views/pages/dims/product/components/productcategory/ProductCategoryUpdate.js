@@ -14,7 +14,7 @@ import {
 } from '@coreui/react-pro'
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
-import { updateProductCategory, selectProductCategoryId } from '../../../../../../store/reducers/references/productCategorySlice';
+import { updateProductCategory, selectProductCategoryId } from '../../../../../../store/reducers/productCategorySlice';
 import { selectUser } from '../../../../../../store/reducers/users';
 
 const ProductCategoryUpdate = () => {

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { axiosInstance } from '../../../store/middleware/directus'
+import { axiosInstance } from 'src/store/middleware/directus'
 
 //Selection dropdowns
 export const getFasReference = createAsyncThunk(

@@ -6,7 +6,6 @@ import { REACT_APP_DIRECTUS_URL, REACT_APP_DIRECTUS_TOKEN } from '../config';
 const singleton = Symbol();
 const singletonEnforcer = Symbol();
 
-
 class ApiService {  
     constructor(enforcer) {
         if (enforcer !== singletonEnforcer) {
@@ -48,7 +47,7 @@ class ApiService {
         this.localStorage.interceptors.request.use((config) => {
           const newConfig = { ...config };
           newConfig.headers['Authorization'] = `Bearer ${token}`;
-        //   newConfig.headers['Authorization'] = `Bearer ${REACT_APP_DIRECTUS_TOKEN}`;
+          //newConfig.headers['Authorization'] = `Bearer ${REACT_APP_DIRECTUS_TOKEN}`;
     
           return newConfig;
         },(error)=>{
@@ -64,8 +63,7 @@ class ApiService {
             if (errorResponse.status === 401) {
                 localStorage.removeItem("token");
                 refresh();
-            }
-            
+            }            
             return Promise.reject(error);
         })
     };
