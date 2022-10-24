@@ -54,6 +54,8 @@ const RoleList = React.lazy(() => import('./views/pages/dims/roles/RoleTable'))
 const CompanyWarehouse = React.lazy(() => import('./views/pages/dims/company_warehouse/CompanyWarehouse'))
 const CustomerWarehouse = React.lazy(() => import('./views/pages/dims/customer_warehouse/CustomerWarehouse'))
 
+const Customer = React.lazy(() => import('./views/pages/dims/customer/Customer'))
+
 
 const NotificationList = React.lazy(() => import('./views/pages/dims/notifications/NotificationsTable'))
 
@@ -65,7 +67,7 @@ const routes = [
   { path: '/dashboard', exact: true, name: 'Dashboard', element: Dashboard },
   { path: '/notifications', name: 'Notifications', element: NotificationList },
 
-  { path: '/customers', name: 'All Customers', element: CustomerList },
+  // { path: '/customers', name: 'All Customers', element: CustomerList },
   { path: '/customer/add', name: 'Add New Customer', element: CustomerAddForm },
   { path: '/customer/:id', exact: true, name: 'Update Customer', element: CustomerUpdateForm },
   
@@ -114,6 +116,8 @@ const routes = [
 
   { path: '/company_warehouse', name: 'Company Warehouse', element: CompanyWarehouse },
   { path: '/customer_warehouse', name: 'Customer Warehouse', element: CustomerWarehouse },
+
+  { path: '/customers', name: 'All Customers', element: Customer },
 ]
 
 export default routes

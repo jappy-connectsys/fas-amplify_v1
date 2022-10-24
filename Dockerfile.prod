@@ -15,9 +15,13 @@ ENV SKIP_PREFLIGHT_CHECK=true \
     REACT_APP_DIRECTUS_URL=https://moandbear-cms-dev.5i9kftpno7oc0.ap-southeast-1.cs.amazonlightsail.com \
     REACT_APP_DEV_URL=moandbear-cms-dev.5i9kftpno7oc0.ap-southeast-1.cs.amazonlightsail.com \
     REACT_APP_DIRECTUS_TOKEN=@spiderman03 \
-    NODE_ENV=development \
-    LOCAL_AUTH_TOKEN_KEY=tokenKey \
-    COMPANY_ROLE=69EB398A-E245-4DC0-9CE6-6A209EE5EDF9 \
+    REACT_APP_NODE_ENV=development \
+    REACT_APP_LOCAL_AUTH_TOKEN_KEY=tokenKey \
+    REACT_APP_COMPANY_ROLE=69EB398A-E245-4DC0-9CE6-6A209EE5EDF9 \
+    REACT_APP_SENDGRID_LINK_TO_SEND_FORGOT_PASSWORD=https://moandbear-cms-dev.5i9kftpno7oc0.ap-southeast-1.cs.amazonlightsail.com/flows/trigger/D60F438A-3C5B-4D49-B563-03594A309915 \
+    REACT_APP_SENDGRID_LINK=https://faswebdev.5i9kftpno7oc0.ap-southeast-1.cs.amazonlightsail.com/reset-password \
+    REACT_APP_SENDGRID_EMAIL_SENDER=john.serafico@connectsys.tech \
+    REACT_APP_SENDGRID_SENDER_NAME=Administrator \
     PORT=8572
 
 RUN env
